@@ -1,38 +1,12 @@
-# Evenlyo-VENDOR
+# React + Vite
 
-This is the README file for the Evenlyo-VENDOR project.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Project Overview
+Currently, two official plugins are available:
 
-Provide a brief description of your project here.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Getting Started
+## Expanding the ESLint configuration
 
-1. Clone the repository:
-   ```sh
-   git clone <repository-url>
-   ```
-2. Navigate to the project directory:
-   ```sh
-   cd Evenlyo-VENDOR
-   ```
-3. Install dependencies:
-   ```sh
-   # Add installation instructions here (e.g., npm install, yarn install)
-   ```
-
-## Usage
-
-Explain how to run or use the project.
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/YourFeature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin feature/YourFeature`)
-5. Create a new Pull Request
-
-## License
-
-Specify the license for your project here.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
