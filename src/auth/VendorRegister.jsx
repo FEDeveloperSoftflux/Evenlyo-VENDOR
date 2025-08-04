@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import UploadIcon from '../assets/icons/Upload.svg';
+import UploadIcon from '../assets/icons/upload.svg';
 import VendorOtpStep from "./VendorOtpStep";
 import VendorVerificationSuccess from "./VendorVerificationSuccess";
 import { sendOtpForVendorRegister, registerVendorWithOtp } from '../store/actions/authActions';
@@ -16,9 +16,11 @@ import subcategory2Icon from '../assets/icons/subcategory2.svg';
 import subcategory3Icon from '../assets/icons/subcategory3.svg';
 import tableIcon from '../assets/icons/Table.svg';
 import ledIcon from '../assets/icons/LED.svg';
-import chandelierIcon from '../assets/icons/Chandelier.svg';;
+import chandelierIcon from '../assets/icons/Chandelier.svg';
+import personIcon from '../assets/icons/Person.svg';
+import mailIcon from '../assets/icons/Mail.svg';
 
-const VendorRegister = ({ onClose, onSwitchToClient }) => {
+const VendorRegister = ({ onClose }) => {
   const [step, setStep] = useState(1);
   const [verificationType, setVerificationType] = useState('phone');
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -84,14 +86,14 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
   const sendOTP = async () => {
     setLoading(true);
     setError('');
-    
+
     try {
       const email = formData.email || formData.companyEmail;
       if (!email) {
         setError('Email is required to send OTP');
         return;
       }
-      
+
       const result = await sendOtpForVendorRegister(email);
       if (result.success) {
         setOtpSent(true);
@@ -116,7 +118,7 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const totalSteps = getTotalSteps();
-    
+
     if (step < totalSteps) {
       setStep(step + 1);
     } else if (step === totalSteps) {
@@ -165,10 +167,9 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
             {steps.map((stepItem, index) => (
               <React.Fragment key={stepItem.num}>
                 <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-semibold text-sm
-                  ${
-                    (indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum))
-                      ? 'bg-primary-600 text-white border-primary-600 animate-pulse'
-                      : indicatorStep === stepItem.num
+                  ${(indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum))
+                    ? 'bg-primary-600 text-white border-primary-600 animate-pulse'
+                    : indicatorStep === stepItem.num
                       ? 'bg-white text-primary-600 border-primary-600'
                       : 'bg-white text-gray-400 border-gray-300'
                   }
@@ -190,7 +191,7 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
             ))}
           </div>
         </div>
-        
+
         {/* Desktop: Show all steps */}
         <div className="hidden md:block mb-6 sm:mb-18 w-full">
           <div className="flex items-center justify-between w-full">
@@ -198,10 +199,9 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
               <React.Fragment key={stepItem.num}>
                 <div className="flex flex-col items-center flex-shrink-0 relative">
                   <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 flex items-center justify-center font-semibold text-xs sm:text-sm
-                    ${
-                      (indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum))
-                        ? 'bg-primary-600 text-white border-primary-600 animate-pulse'
-                        : indicatorStep === stepItem.num
+                    ${(indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum))
+                      ? 'bg-primary-600 text-white border-primary-600 animate-pulse'
+                      : indicatorStep === stepItem.num
                         ? 'bg-white text-primary-600 border-primary-600'
                         : 'bg-white text-black-400 border-black'
                     }
@@ -215,9 +215,8 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
                     )}
                   </div>
                   <div className="absolute top-full mt-2 flex flex-col items-center">
-                    <span className={`text-xs sm:text-xs font-medium text-center whitespace-nowrap ${
-                      (indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum)) ? 'text-primary-600' : indicatorStep === stepItem.num ? 'text-primary-600' : 'text-gray-400'
-                    }`}>
+                    <span className={`text-xs sm:text-xs font-medium text-center whitespace-nowrap ${(indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum)) ? 'text-primary-600' : indicatorStep === stepItem.num ? 'text-primary-600' : 'text-gray-400'
+                      }`}>
                       {stepItem.label}
                     </span>
                   </div>
@@ -297,9 +296,9 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
     <div className="space-y-4 sm:space-y-6">
       <div className="text-center">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 mt-4">Create Your Vendor Account</h2>
-        <p className="text-sm sm:text-base text-gray-800 mb-6 sm:mb-10">Welcome to <span className="font-bold">Evenlyo</span> Management. Please<br/> Select Your Account Type</p>
+        <p className="text-sm sm:text-base text-gray-800 mb-6 sm:mb-10">Welcome to <span className="font-bold">Evenlyo</span> Management. Please<br /> Select Your Account Type</p>
       </div>
-      
+
       <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center max-w-2xl mx-auto">
         <button
           type="button"
@@ -311,11 +310,11 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
             }`}
         >
           <div className="w-14 h-14 rounded-xl bg-white border-2 border-gray-200 flex items-center justify-center mx-auto mb-3 shadow">
-            <img src="/assets/Person.svg" alt="Personal Account" className="w-7 h-7" style={{ filter: 'invert(18%) sepia(98%) saturate(7492%) hue-rotate(303deg) brightness(99%) contrast(105%)' }} />
+            <img src={personIcon} alt="Personal Account" className="w-7 h-7" style={{ filter: 'invert(18%) sepia(98%) saturate(7492%) hue-rotate(303deg) brightness(99%) contrast(105%)' }} />
           </div>
           <h3 className="font-semibold text-gray-900 text-base">Personal Account</h3>
         </button>
-        
+
         <button
           type="button"
           onClick={() => setFormData(prev => ({ ...prev, accountType: 'business' }))}
@@ -326,7 +325,7 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
             }`}
         >
           <div className="w-14 h-14 rounded-xl bg-white border-2 border-gray-200 flex items-center justify-center mx-auto mb-3 shadow">
-            <img src="/assets/icons/Mail.svg" alt="Business Account" className="w-7 h-7" />
+            <img src={mailIcon} alt="Business Account" className="w-7 h-7" />
           </div>
           <h3 className="font-semibold text-gray-900 text-base">Business Account</h3>
         </button>
@@ -341,7 +340,7 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
           {formData.accountType === 'business' ? 'Business Information' : 'Your Personal Info'}
         </h2>
       </div>
-      
+
       {formData.accountType === 'business' ? (
         <>
           <div className="grid grid-cols-2 gap-4">
@@ -598,7 +597,7 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
           </div>
         </>
       )}
-      
+
     </div>
   );
 
@@ -610,7 +609,7 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
         <div className="text-center mb-6">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Select Your Category's</h2>
         </div>
-        
+
         <div className="grid grid-cols-3 grid-rows-2 gap-6 justify-items-center max-w-md mx-auto mb-6">
           {categories.slice(0, 3).map((category) => (
             <div
@@ -623,35 +622,31 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
                 );
                 setSelectedSubCategories([]);
               }}
-              className={`flex flex-col items-center cursor-pointer transition-all duration-300 ${
-                selectedCategories.includes(category.name) ? 'transform scale-105' : 'hover:scale-102'
-              }`}
+              className={`flex flex-col items-center cursor-pointer transition-all duration-300 ${selectedCategories.includes(category.name) ? 'transform scale-105' : 'hover:scale-102'
+                }`}
             >
               <div
-                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 flex items-center justify-center mb-2 transition-all duration-300 ${
-                  selectedCategories.includes(category.name)
-                    ? 'bg-gradient-to-b from-secondary via-primary-500 to-primary-600 border-white shadow-category'
-                    : 'bg-white border-gray-200 hover:border-primary-300 shadow-card'
-                }`}
+                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 flex items-center justify-center mb-2 transition-all duration-300 ${selectedCategories.includes(category.name)
+                  ? 'bg-gradient-to-b from-secondary via-primary-500 to-primary-600 border-white shadow-category'
+                  : 'bg-white border-gray-200 hover:border-primary-300 shadow-card'
+                  }`}
               >
                 <img
                   src={category.icon}
                   alt={category.name}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 transition-all duration-300 ${
-                    selectedCategories.includes(category.name) ? 'filter brightness-0 invert' : ''
-                  }`}
+                  className={`w-8 h-8 sm:w-10 sm:h-10 transition-all duration-300 ${selectedCategories.includes(category.name) ? 'filter brightness-0 invert' : ''
+                    }`}
                 />
               </div>
               <span
-                className={`text-xs sm:text-sm font-medium text-center max-w-20 sm:max-w-28 leading-tight transition-all duration-300 ${
-                  selectedCategories.includes(category.name) ? 'text-primary-500 font-semibold' : 'text-gray-700'
-                }`}
+                className={`text-xs sm:text-sm font-medium text-center max-w-20 sm:max-w-28 leading-tight transition-all duration-300 ${selectedCategories.includes(category.name) ? 'text-primary-500 font-semibold' : 'text-gray-700'
+                  }`}
               >
                 {category.name}
               </span>
             </div>
           ))}
-          
+
           <div className="col-span-3 flex justify-center gap-6">
             {categories.slice(3, 5).map((category) => (
               <div
@@ -664,29 +659,25 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
                   );
                   setSelectedSubCategories([]);
                 }}
-                className={`flex flex-col items-center cursor-pointer transition-all duration-300 ${
-                  selectedCategories.includes(category.name) ? 'transform scale-105' : 'hover:scale-102'
-                }`}
+                className={`flex flex-col items-center cursor-pointer transition-all duration-300 ${selectedCategories.includes(category.name) ? 'transform scale-105' : 'hover:scale-102'
+                  }`}
               >
                 <div
-                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 flex items-center justify-center mb-2 transition-all duration-300 ${
-                    selectedCategories.includes(category.name)
-                      ? 'bg-gradient-to-b from-secondary via-primary-500 to-primary-600 border-white shadow-category'
-                      : 'bg-white border-gray-200 hover:border-primary-300 shadow-card'
-                  }`}
+                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 flex items-center justify-center mb-2 transition-all duration-300 ${selectedCategories.includes(category.name)
+                    ? 'bg-gradient-to-b from-secondary via-primary-500 to-primary-600 border-white shadow-category'
+                    : 'bg-white border-gray-200 hover:border-primary-300 shadow-card'
+                    }`}
                 >
                   <img
                     src={category.icon}
                     alt={category.name}
-                    className={`w-8 h-8 sm:w-10 sm:h-10 transition-all duration-300 ${
-                      selectedCategories.includes(category.name) ? 'filter brightness-0 invert' : ''
-                    }`}
+                    className={`w-8 h-8 sm:w-10 sm:h-10 transition-all duration-300 ${selectedCategories.includes(category.name) ? 'filter brightness-0 invert' : ''
+                      }`}
                   />
                 </div>
                 <span
-                  className={`text-xs sm:text-sm font-medium text-center max-w-20 sm:max-w-28 leading-tight transition-all duration-300 ${
-                    selectedCategories.includes(category.name) ? 'text-primary-500 font-semibold' : 'text-gray-700'
-                  }`}
+                  className={`text-xs sm:text-sm font-medium text-center max-w-20 sm:max-w-28 leading-tight transition-all duration-300 ${selectedCategories.includes(category.name) ? 'text-primary-500 font-semibold' : 'text-gray-700'
+                    }`}
                 >
                   {category.name}
                 </span>
@@ -719,11 +710,10 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
                     key={subcategory}
                     type="button"
                     onClick={() => handleSubCategoryToggle(subcategory)}
-                    className={`px-4 py-2 rounded-2xl text-md font-medium transition-all duration-300 flex items-center space-x-4 ${
-                      selectedSubCategories.includes(subcategory)
-                        ? 'bg-gradient-to-b from-secondary via-primary-500 to-primary-600 text-white shadow-md'
-                        : 'bg-white text-gray-600 border border-gray-200 hover:border-primary-300 hover:text-primary-500'
-                    }`}
+                    className={`px-4 py-2 rounded-2xl text-md font-medium transition-all duration-300 flex items-center space-x-4 ${selectedSubCategories.includes(subcategory)
+                      ? 'bg-gradient-to-b from-secondary via-primary-500 to-primary-600 text-white shadow-md'
+                      : 'bg-white text-gray-600 border border-gray-200 hover:border-primary-300 hover:text-primary-500'
+                      }`}
                   >
                     <img
                       src={getSubcategoryIcon(subcategory)}
@@ -747,7 +737,7 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
       <div className="text-center mb-2">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">Gallery</h2>
       </div>
-      
+
       <div className="flex gap-4 mb-4">
         <div className="flex-shrink-0 w-20 h-30 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center bg-gray-50">
           <label htmlFor="banner-upload" className="cursor-pointer flex flex-col items-center justify-center w-full h-full">
@@ -762,7 +752,7 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
           </label>
         </div>
       </div>
-      
+
       <div className="border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center bg-gray-50 mb-4 min-h-[90px]">
         <label htmlFor="work-images-upload" className="w-full h-full flex flex-col items-center justify-center cursor-pointer py-6">
           <img src="/assets/Upload.svg" alt="Upload" className="w-7 h-7 mb-2" />
@@ -770,7 +760,7 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
           <input id="work-images-upload" name="workImages" type="file" accept="image/*" multiple className="hidden" onChange={handleFileChange} />
         </label>
       </div>
-      
+
       <div className="border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center bg-gray-50 mb-4 min-h-[90px]">
         <label htmlFor="work-video-upload" className="w-full h-full flex flex-col items-center justify-center cursor-pointer py-6">
           <img src="/assets/Upload.svg" alt="Upload" className="w-7 h-7 mb-2" />
@@ -844,23 +834,21 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
           <div className="relative flex mb-6 bg-gray-100 rounded-full p-1 h-12">
             {/* Sliding pill background */}
             <span
-              className="absolute top-1 left-1 h-10 w-1/2 rounded-full btn-primary-mobile shadow transition-all duration-300"
+              className="absolute top-1 left-1 h-10 w-1/2 rounded-full bg-gradient-brand shadow transition-all duration-300"
               style={{
                 transform: verificationType === 'phone' ? 'translateX(0%)' : 'translateX(100%)',
               }}
             />
             <button
-              className={`flex-1 z-10 py-2 rounded-full font-semibold transition-all duration-200 focus:outline-none ${
-                verificationType === 'phone' ? 'text-white' : 'text-gray-400'
-              }`}
+              className={`flex-1 z-10 py-2 rounded-full font-semibold transition-all duration-200 focus:outline-none ${verificationType === 'phone' ? 'text-white' : 'text-gray-400'
+                }`}
               onClick={() => setVerificationType('phone')}
             >
               Phone Number
             </button>
             <button
-              className={`flex-1 z-10 py-2 rounded-full font-semibold transition-all duration-200 focus:outline-none ${
-                verificationType === 'email' ? 'text-white' : 'text-gray-400'
-              }`}
+              className={`flex-1 z-10 py-2 rounded-full font-semibold transition-all duration-200 focus:outline-none ${verificationType === 'email' ? 'text-white' : 'text-gray-400'
+                }`}
               onClick={() => setVerificationType('email')}
             >
               Email Address
@@ -961,21 +949,21 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
                     <button
                       type="submit"
                       disabled={step === 1 && !formData.accountType}
-                      className="px-4 sm:px-6 py-2 btn-primary-mobile text-white font-bold rounded-xl transition-all duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 sm:px-6 py-2 btn-primary-mobile bg-gradient-brand text-white font-bold rounded-xl transition-all duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {step === getTotalSteps() ? 'Verify' : 'Next'}
                     </button>
                   </div>
                 </form>
-                
+
                 {/* Login Link */}
                 <div className="flex items-center justify-center mt-6">
                   <div className="text-center">
                     <p className="text-sm text-gray-600">
                       Already have an account?
                     </p>
-                    <Link 
-                      to="/vendor/login" 
+                    <Link
+                      to="/vendor/login"
                       className="inline-flex items-center px-4 py-2 mt-2 text-sm font-medium text-pink-600 bg-pink-50 border border-pink-200 rounded-lg hover:bg-pink-100 hover:text-pink-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
                     >
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1030,7 +1018,7 @@ const VendorRegister = ({ onClose, onSwitchToClient }) => {
                   businessLocation: formData.businessLocation || formData.city,
                   businessDescription: formData.businessDescription || ''
                 };
-                
+
                 try {
                   const result = await registerVendorWithOtp(registrationData);
                   if (result.success) {
