@@ -168,9 +168,9 @@ const VendorRegister = ({ onClose }) => {
               <React.Fragment key={stepItem.num}>
                 <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-semibold text-sm
                   ${(indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum))
-                    ? 'bg-primary-600 text-white border-primary-600 animate-pulse'
+                    ? 'bg-brand-primary text-white border-brand-primary animate-pulse'
                     : indicatorStep === stepItem.num
-                      ? 'bg-white text-primary-600 border-primary-600'
+                      ? 'bg-white text-brand-primary border-brand-primary'
                       : 'bg-white text-gray-400 border-gray-300'
                   }
                 `}>
@@ -184,7 +184,7 @@ const VendorRegister = ({ onClose }) => {
                 </div>
                 {index < steps.length - 1 && (
                   <div className={`w-4 h-0.5
-                    ${(indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum)) ? 'bg-primary-500' : 'bg-gray-300'}
+                    ${(indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum)) ? 'bg-brand-primary' : 'bg-gray-300'}
                   `} />
                 )}
               </React.Fragment>
@@ -200,9 +200,9 @@ const VendorRegister = ({ onClose }) => {
                 <div className="flex flex-col items-center flex-shrink-0 relative">
                   <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 flex items-center justify-center font-semibold text-xs sm:text-sm
                     ${(indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum))
-                      ? 'bg-primary-600 text-white border-primary-600 animate-pulse'
+                      ? 'bg-brand-primary text-white border-brand-primary animate-pulse'
                       : indicatorStep === stepItem.num
-                        ? 'bg-white text-primary-600 border-primary-600'
+                        ? 'bg-white text-brand-primary border-brand-primary'
                         : 'bg-white text-black-400 border-black'
                     }
                   `}>
@@ -215,7 +215,7 @@ const VendorRegister = ({ onClose }) => {
                     )}
                   </div>
                   <div className="absolute top-full mt-2 flex flex-col items-center">
-                    <span className={`text-xs sm:text-xs font-medium text-center whitespace-nowrap ${(indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum)) ? 'text-primary-600' : indicatorStep === stepItem.num ? 'text-primary-600' : 'text-gray-400'
+                    <span className={`text-xs sm:text-xs font-medium text-center whitespace-nowrap ${(indicatorStep > stepItem.num || (isVerificationDone && stepItem.num === verificationStepNum)) ? 'text-brand-primary' : indicatorStep === stepItem.num ? 'text-brand-primary' : 'text-gray-400'
                       }`}>
                       {stepItem.label}
                     </span>

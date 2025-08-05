@@ -16,7 +16,7 @@ const VendorOtpStep = ({ otp, setOtp, timer, inputs, handleOtpChange, handleOtpK
           value={otp[i]}
           onChange={e => handleOtpChange(e, i)}
           onKeyDown={e => handleOtpKeyDown(e, i)}
-          className="w-12 md:w-14 h-20 text-2xl text-center border border-gray-200 rounded-xl bg-gray-200 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all duration-300"
+    className="w-12 md:w-14 h-20 text-2xl text-center border border-gray-200 rounded-xl bg-gray-200 focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all duration-300"
           autoFocus={i === 0}
         />
       ))}

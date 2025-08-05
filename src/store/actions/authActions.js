@@ -1,34 +1,54 @@
 import { loginRequest, loginSuccess, loginFailure, logout } from '../slices/authSlice';
-
-// Actual API call for vendor login
 import api from '../api';
+
+// Mock credentials for vendor login
+const MOCK_VENDOR_CREDENTIALS = {
+  email: 'hammad.abbasi211@gmail.com',
+  password: 'password123'
+};
 
 export const loginVendor = (credentials) => async (dispatch) => {
   dispatch(loginRequest());
-  
+
   try {
-    // Make an API call to the backend to verify user credentials
-    const response = await api.post('/auth/login', credentials);
-    
-    // Extract the user data from the response
-    const { user } = response.data;
-    
-    // Check if user is a vendor
-    if (user.role !== 'vendor') {
-      const errorMessage = 'Access denied. Only vendors can access this portal.';
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Check mock credentials
+    if (credentials.email === MOCK_VENDOR_CREDENTIALS.email &&
+      credentials.password === MOCK_VENDOR_CREDENTIALS.password) {
+
+      const user = {
+        id: 1,
+        email: credentials.email,
+        name: 'Vendor User',
+        role: 'vendor',
+        vendor: {
+          id: 1,
+          businessName: 'Test Vendor Business',
+          category: 'Entertainment',
+          verified: true
+        }
+      };
+
+      const token = 'mock-vendor-jwt-token';
+
+      // Store user data in localStorage
+      localStorage.setItem('vendorUser', JSON.stringify(user));
+      localStorage.setItem('vendorToken', token);
+
+      // Dispatch success action
+      dispatch(loginSuccess({ user, token }));
+
+      return { success: true, user };
+    } else {
+      const errorMessage = 'Invalid email or password';
       dispatch(loginFailure(errorMessage));
       return { success: false, error: errorMessage };
     }
-    
-    // Store user data in localStorage (token is handled by cookies)
-    localStorage.setItem('vendorUser', JSON.stringify(user));
-    
-    // Dispatch success action
-    dispatch(loginSuccess({ user }));
-    
-    return { success: true, user };
+
   } catch (error) {
-    const errorMessage = error.response?.data?.message || error.message || 'Login failed. Please try again.';
+    const errorMessage = error.message || 'Login failed. Please try again.';
     dispatch(loginFailure(errorMessage));
     return { success: false, error: errorMessage };
   }
@@ -36,16 +56,22 @@ export const loginVendor = (credentials) => async (dispatch) => {
 
 export const logoutVendor = () => async (dispatch) => {
   try {
-    // Call logout endpoint to clear cookies
-    await api.post('/auth/logout');
-  } catch (error) {
-    console.error('Logout error:', error);
-  } finally {
-    // Remove data from localStorage
+    // For mock auth, we don't need to call API
+    // Just clear localStorage and dispatch logout
     localStorage.removeItem('vendorToken');
     localStorage.removeItem('vendorUser');
-    
+
     dispatch(logout());
+
+    return { success: true };
+  } catch (error) {
+    console.error('Logout error:', error);
+    // Even if there's an error, still clear local data
+    localStorage.removeItem('vendorToken');
+    localStorage.removeItem('vendorUser');
+    dispatch(logout());
+
+    return { success: false, error: error.message };
   }
 };
 
@@ -54,7 +80,7 @@ export const checkAuthStatus = () => async (dispatch) => {
     // Check authentication status with the server
     const response = await api.get('/auth/me');
     const { user, vendor } = response.data;
-    
+
     if (user && user.role === 'vendor') {
       const userData = { ...user, vendor };
       localStorage.setItem('vendorUser', JSON.stringify(userData));
@@ -110,7 +136,7 @@ export const registerVendor = async (registrationData) => {
 // Send OTP for forgot password
 export const sendOtpForForgotPassword = async (email) => {
   try {
-    const response = await api.post('/auth/send-otp-forgot', { email });
+    const response = await api.post('/auth/send-forgot-otp', { email });
     return { success: true, message: response.data.message };
   } catch (error) {
     const errorMessage = error.response?.data?.message || 'Failed to send OTP';
@@ -121,7 +147,7 @@ export const sendOtpForForgotPassword = async (email) => {
 // Verify OTP for forgot password
 export const verifyOtpForForgotPassword = async (email, otp) => {
   try {
-    const response = await api.post('/auth/verify-otp-forgot', { email, otp });
+    const response = await api.post('/auth/verify-forgot-otp', { email, otp });
     return { success: true, message: response.data.message };
   } catch (error) {
     const errorMessage = error.response?.data?.message || 'OTP verification failed';

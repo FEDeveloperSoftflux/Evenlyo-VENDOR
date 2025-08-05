@@ -1,19 +1,32 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Settings, LogOut, ChevronDown, Menu } from "lucide-react";
 import notificationIcon from "../../assets/icons/notification.svg";
 import userPhoto from "../../assets/images/jaydeep.png";
 import { useSidebar } from "../../contexts/SidebarContext";
+import { logoutVendor } from "../../store/actions/authActions";
 
 const Header = ({
   userName = "John Doe",
   userRole = "Vendor",
   currentModule = "Dashboard",
 }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const { isCollapsed, toggleMobile } = useSidebar();
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
   const toggleUserDropdown = () => {
     setIsUserDropdownOpen(!isUserDropdownOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutVendor());
+      // The logout action will clear the auth state and redirect to login
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (
@@ -65,7 +78,7 @@ const Header = ({
                     className="w-6 sm:w-8 h-6 sm:h-8 rounded-full object-cover ring-2 ring-transparent group-hover:ring-gray-200 transition-all duration-300"
                   />
                   <span className="text-xs sm:text-sm font-medium text-gray-900 hidden xs:block">
-                    John Doe
+                    {user?.name || userName}
                   </span>
                   <ChevronDown className={`w-3 sm:w-4 h-3 sm:h-4 transition-all duration-300 ${
                     isUserDropdownOpen ? 'transform rotate-180 text-pink-500' : ''
@@ -81,16 +94,19 @@ const Header = ({
                     <div className="absolute right-0 mt-3 w-52 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50 backdrop-blur-sm animate-in slide-in-from-top-2 duration-200">
                       <div className="px-5 py-3 border-b border-gray-100">
                         <p className="text-sm font-semibold text-gray-900">
-                          John Doe
+                          {user?.name || userName}
                         </p>
-                        <p className="text-xs text-gray-500 mt-0.5">john@evenlyo.com</p>
+                        <p className="text-xs text-gray-500 mt-0.5">{user?.email || 'vendor@evenlyo.com'}</p>
                       </div>
                       <div className="py-1">
                         <button className="w-full text-left px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 flex items-center space-x-3 active:bg-gray-200">
                           <Settings className="w-4 h-4 text-primary-mid" />
                           <span>Settings</span>
                         </button>
-                        <button className="w-full text-left px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 flex items-center space-x-3 active:bg-gray-200 rounded-b-2xl">
+                        <button 
+                          onClick={handleLogout}
+                          className="w-full text-left px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 flex items-center space-x-3 active:bg-gray-200 rounded-b-2xl"
+                        >
                           <LogOut className="w-4 h-4 text-primary-mid" />
                           <span>Logout</span>
                         </button>

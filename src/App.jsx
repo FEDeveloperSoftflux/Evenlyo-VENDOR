@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Dashboard from './pages/Dashboard';
 import ListManagement from './pages/ListManagement';
 import BookingAnalytics from './pages/BookingAnalytics';
@@ -12,13 +13,20 @@ import Notifications from './pages/Notifications';
 import ProfileManagement from './pages/ProfileManagement';
 import Settings from './pages/Settings';
 import { SidebarProvider } from './contexts/SidebarContext';
+import VendorLogin from './auth/VendorLogin';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('Dashboard');
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const handleNavigation = (pageName) => {
     setCurrentPage(pageName);
   };
+
+  // If user is not authenticated, show login page
+  if (!isAuthenticated) {
+    return <VendorLogin />;
+  }
 
   const renderPage = () => {
     switch (currentPage) {

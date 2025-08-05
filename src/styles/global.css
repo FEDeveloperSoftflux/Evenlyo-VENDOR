@@ -315,3 +315,30 @@ select {
 .btn-nowrap {
   white-space: nowrap;
 }
+
+/* Button Primary Mobile Style */
+.btn-primary-mobile {
+  background: linear-gradient(180deg, #FF295D 0%, #E31B95 50%, #C817AE 100%);
+  transition: all 0.3s ease;
+}
+
+.btn-primary-mobile:hover {
+  background: linear-gradient(180deg, #e31b95 0%, #c817ae 50%, #a613a0 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(227, 27, 149, 0.3);
+}
+
+/* Button Secondary Mobile Style */
+.btn-secondary-mobile {
+  background: white;
+  border: 2px solid #E31B95;
+  color: #E31B95;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-mobile:hover {
+  background: #E31B95;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(227, 27, 149, 0.3);
+}

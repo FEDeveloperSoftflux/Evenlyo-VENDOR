@@ -142,7 +142,7 @@ const VendorForgotPasswordModal = ({ isOpen, onClose }) => {
               <label className="block text-base font-medium text-gray-800 mb-2">Enter New Password</label>
               <input
                 type="password"
-                className="w-full px-4 py-2 border border-gray-200 rounded-2xl bg-gray-100 focus:ring-1 focus:ring-pink-400 focus:border-pink-400 outline-none transition-all duration-300"
+                className="w-full px-4 py-2 border border-gray-200 rounded-2xl bg-gray-100 focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all duration-300"
                 placeholder="Enter Your Password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
@@ -152,7 +152,7 @@ const VendorForgotPasswordModal = ({ isOpen, onClose }) => {
               <label className="block text-base font-medium text-gray-800 mb-2">Re-Enter Password</label>
               <input
                 type="password"
-                className="w-full px-4 py-2 border border-gray-200 rounded-2xl bg-gray-100 focus:ring-1 focus:ring-pink-400 focus:border-pink-400 outline-none transition-all duration-300"
+                className="w-full px-4 py-2 border border-gray-200 rounded-2xl bg-gray-100 focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all duration-300"
                 placeholder="Confirm Your Password"
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}

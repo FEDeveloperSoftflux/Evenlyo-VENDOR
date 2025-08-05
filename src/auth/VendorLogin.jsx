@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import heroImage from '../assets/images/hero-img.png';
-import { Link } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import VendorRegister from "./VendorRegister";
 import VendorForgotPasswordModal from "./VendorForgotPasswordModal";
 import { loginVendor } from '../store/actions/authActions';
 
 export default function VendorLogin() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { loading, error: authError } = useSelector(state => state.auth);
 
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -30,11 +25,10 @@ export default function VendorLogin() {
 
         try {
             const result = await dispatch(loginVendor(formData));
-            if (result.success) {
-                navigate('/dashboard');
-            } else {
+            if (!result.success) {
                 setError(result.error);
             }
+            // No need to navigate - Redux state change will handle the redirect
         } catch (err) {
             setError('Login failed. Please try again.');
         }
@@ -55,8 +49,6 @@ export default function VendorLogin() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <Header />
-
             <section
                 className="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center bg-gray-900"
                 style={{
@@ -93,9 +85,18 @@ export default function VendorLogin() {
                         {/* Right Side - Login Form */}
                         <div className="lg:col-span-5 relative">
                             <div className="bg-white rounded-2xl shadow-2xl p-8 transform lg:translate-y-16 lg:mb-16">
-                                <div className="text-center mb-8">
+                                <div className="text-center mb-6">
                                     <h2 className="text-3xl font-bold text-gray-900 mb-2">Vendor Login</h2>
                                     <p className="text-gray-600">Welcome to Vendor Management</p>
+                                </div>
+
+                                {/* Mock Credentials Info */}
+                                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                                    <h3 className="font-semibold text-blue-800 mb-2 text-sm">Test Credentials:</h3>
+                                    <p className="text-xs text-blue-700">
+                                        <strong>Email:</strong> hammad.abbasi211@gmail.com<br />
+                                        <strong>Password:</strong> password123
+                                    </p>
                                 </div>
 
                                 <form onSubmit={handleLogin} className="space-y-6">
@@ -106,7 +107,7 @@ export default function VendorLogin() {
                                             name="email"
                                             value={formData.email}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all duration-300"
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all duration-300"
                                             placeholder="Enter your email"
                                             required
                                         />
@@ -119,14 +120,14 @@ export default function VendorLogin() {
                                             name="password"
                                             value={formData.password}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all duration-300"
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none transition-all duration-300"
                                             placeholder="Enter your password"
                                             required
                                         />
                                     </div>
 
                                     <div className="flex items-center justify-end">
-                                        <button onClick={handleForgotPassword} className="text-sm text-pink-500 hover:text-pink-600 font-medium bg-transparent border-none cursor-pointer">Forgot Password?</button>
+                                        <button onClick={handleForgotPassword} className="text-sm text-brand-primary hover:text-primary-600 font-medium bg-transparent border-none cursor-pointer">Forgot Password?</button>
                                     </div>
 
                                     {(error || authError) && <div className="text-red-500 text-sm text-center mb-2">{error || authError}</div>}
@@ -184,7 +185,7 @@ export default function VendorLogin() {
                                 <div className="text-center mt-6">
                                     <p className="text-sm text-gray-600">
                                         Don't have an account?
-                                        <button onClick={handleBecomeVendor} className="text-pink-500 hover:text-pink-600 font-medium ml-1 underline bg-transparent border-none cursor-pointer">Register as Vendor</button>
+                                        <button onClick={handleBecomeVendor} className="text-brand-primary hover:text-primary-600 font-medium ml-1 underline bg-transparent border-none cursor-pointer">Register as Vendor</button>
                                     </p>
                                 </div>
                             </div>
@@ -192,8 +193,6 @@ export default function VendorLogin() {
                     </div>
                 </div>
             </section>
-
-            <Footer />
 
             {/* Vendor Registration Modal */}
             {vendorModalOpen && (
